@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LotusClient</title>
+    <meta property="og:title" content="LotusClient">
+    <meta property="og:description" content="Get Doofenschmerzed!!!">
+    <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/en/e/eb/Heinz_Doofenshmirtz.png">
+    <meta property="og:url" content="https://lotusclient.org">
+    <meta name="theme-color" content="#FF0000">
+    
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="doofenschmerz.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/doofenschmerz-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/doofenschmerz-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+
+        body {
+            background: #0a0a15;
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Smooth background shapes */
+        .bg-shapes {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #6c43f9, #43a6f9);
+            opacity: 0.08;
+            filter: blur(80px);
+            animation: pulse 12s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.4) rotate(180deg); }
+        }
+
+        /* Enhanced navigation */
+        nav {
+            padding: 2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 10, 21, 0.8);
+            backdrop-filter: blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(108, 67, 249, 0.2);
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #6c43f9, #43a6f9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #6c43f9, #43a6f9);
+            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Improved hero section */
+        .hero {
+            text-align: center;
+            padding: 12rem 5% 8rem;
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .floating {
+            animation: float 6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            33% { transform: translateY(-20px); }
+            66% { transform: translateY(10px); }
+        }
+
+        h1 {
+            font-size: 4rem;
+            line-height: 1.1;
+            background: linear-gradient(45deg, #6c43f9, #43a6f9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 2rem;
+            text-shadow: 0 10px 30px rgba(108, 67, 249, 0.2);
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            line-height: 1.6;
+        }
+
+        /* Enhanced buttons */
+        .buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-top: 4rem;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            transform: translateZ(0);
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #6c43f9, #43a6f9);
+            color: white;
+			text-decoration: none;
+            box-shadow: 0 4px 24px -6px rgba(108, 67, 249, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(108, 67, 249, 0.1);
+			text-decoration: none;
+            border: 2px solid rgba(108, 67, 249, 0.4);
+            color: #6c43f9;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 32px -8px rgba(108, 67, 249, 0.6);
+        }
+
+        /* Feature cards with smooth hover */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            padding: 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: rgba(17, 17, 34, 0.6);
+            padding: 2.5rem;
+            border-radius: 16px;
+            border: 1px solid rgba(108, 67, 249, 0.2);
+            backdrop-filter: blur(12px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            background: rgba(17, 17, 34, 0.8);
+            border-color: rgba(108, 67, 249, 0.4);
+            box-shadow: 0 12px 40px -12px rgba(108, 67, 249, 0.3);
+        }
+
+        /* Modern terminal effect */
+        .terminal {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(108, 67, 249, 0.3);
+            padding: 2rem;
+            margin: 3rem auto;
+            width: 80%;
+            border-radius: 12px;
+            backdrop-filter: blur(12px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .terminal::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(108, 67, 249, 0.1),
+                transparent
+            );
+            animation: terminalScan 4s infinite;
+        }
+
+        @keyframes terminalScan {
+            100% { left: 100%; }
+        }
+		
+		.snow {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: fall linear forwards;
+            filter: blur(1px);
+        }
+
+        .snowball {
+            width: 6px;
+            height: 6px;
+            filter: blur(0.5px);
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-5vh) translateX(0);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(100vh) translateX(15px);
+                opacity: 0.4;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="bg-shapes">
+        <div class="shape" style="width: 500px; height: 500px; top: 10%; left: 15%;"></div>
+        <div class="shape" style="width: 400px; height: 400px; top: 60%; right: 20%;"></div>
+        <div class="shape" style="width: 300px; height: 300px; top: 30%; left: 70%;"></div>
+    </div>
+
+    <nav>
+        <div class="logo">LOTUSCLIENT</div>
+        <div class="nav-links">
+            <a href="#features">Features</a>
+            <a href="#download">Download</a>
+            <a href="#discord">Discord</a>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <h1 class="floating">LotusClient<br></h1>
+        <p class="subtitle">Have fun in my Discord Server and buy Gtag accounts!</p>
+        
+        <div class="terminal">
+            <div class="status-line">
+                > System Status: <span style="color: #6c43f9">Undetected</span> [v3.2.1]
+            </div>
+            <div class="status-line">
+                > Active Features: <span style="color: #43a6f9">100+ mods</span>
+            </div>
+            <div class="status-line">
+                > Protection: <span style="color: #6c43f9">Gorilla Not Bypass</span>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <a class="btn btn-primary">About Me</a>
+            <a class="btn btn-secondary"href="https://discord.gg/bWwMjjeAHK">Join Discord</a>
+        </div>
+    </div>
+
+    <div class="features" id="features">
+        <div class="feature-card">
+            <h3>⚡ Velocity Control</h3>
+            <p>Adjustable speed multipliers with smooth transition curves</p>
+        </div>
+        <div class="feature-card">
+            <h3>👻 Phantom Mode</h3>
+            <p>Complete player invisibility with network spoofing</p>
+        </div>
+        <div class="feature-card">
+            <h3>🛡️ Secure Kernel</h3>
+            <p>Advanced anti-cheat protection bypass system</p>
+        </div>
+        <div class="feature-card">
+            <h3>🎮 Input Master</h3>
+            <p>Fully customizable control bindings with macros</p>
+        </div>
+    </div>
+	
+	<script>
+        function createSnow() {
+            const snow = document.createElement('div');
+            snow.className = Math.random() > 0.3 ? 'snow' : 'snowball snow';
+            
+            // Random starting position
+            snow.style.left = Math.random() * 100 + 'vw';
+            
+            // Random size variation
+            const size = Math.random() * 3 + 2;
+            snow.style.width = size + 'px';
+            snow.style.height = size + 'px';
+            
+            // Random animation duration (3-6 seconds)
+            const duration = Math.random() * 3 + 3;
+            snow.style.animationDuration = duration + 's';
+            
+            document.body.appendChild(snow);
+
+            // Remove snow element after animation
+            snow.addEventListener('animationend', () => {
+                // Keep snow at bottom instead of removing
+                snow.style.position = 'fixed';
+                snow.style.bottom = '0';
+                snow.style.animation = 'none';
+                
+                // Fade out after 20 seconds
+                setTimeout(() => {
+                    snow.remove();
+                }, 20000);
+            });
+        }
+
+        // Create snow at intervals
+        setInterval(createSnow, 100);
+    </script>
+
+    <script>
+        // Smooth shape animations
+        document.querySelectorAll('.shape').forEach((shape, index) => {
+            shape.style.animationDelay = `${index * 2}s`;
+        });
+
+        // Add hover scaling to feature cards
+        document.querySelectorAll('.feature-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.transform = `
+                    translateY(-8px)
+                    perspective(1000px)
+                    rotateX(${(y - rect.height/2) / 20}deg)
+                    rotateY(${-(x - rect.width/2) / 20}deg)
+                `;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(-8px)';
+            });
+        });
+    </script>
+</body>
+</html>
